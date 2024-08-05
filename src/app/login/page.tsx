@@ -1,3 +1,6 @@
+import { redirect } from "next/navigation";
+import { login } from "../../utils/auth";
+
 export default function Login() {
   return (
     <div className="bg-white min-h-screen flex flex-col lg:flex-row">
@@ -14,7 +17,12 @@ export default function Login() {
           <p className="mt-2 text-center text-sm leading-6 text-gray-400 max-w">
             Por favor ingrese sus credenciales para continuar
           </p>
-          <form action="#" method="POST" className="space-y-6 mt-10">
+          <form 
+          action={async (formData) => {
+            "use server";
+            await login(formData);
+            redirect("/dashboard");
+          }} className="space-y-6 mt-10">
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Correo Electrónico *
